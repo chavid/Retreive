@@ -14,6 +14,7 @@ targets = [
     { "name" : "rt23" , "command" : "rt label2 label3" },
 
     { "name" : "rt123" , "command" : "rt labels" },
+    { "name" : "rt2not3" , "command" : "rt label2 ~label3" },
     { "name" : "rtfr" , "command" : "rt fichier1" },
     { "name" : "rtmd" , "command" : "rt md" },
     { "name" : "rtmax" , "command" : "rt dir2" },
