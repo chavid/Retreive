@@ -1,0 +1,11 @@
+Usage: label_tower [--help] [--version] [--directory VAR] labels
+
+Find files and directories with the required labels.
+
+Positional arguments:
+  labels           the list of labels to search for. [nargs: 0 or more] 
+
+Optional arguments:
+  -h, --help       shows help message and exits 
+  -v, --version    prints version information and exits 
+  -d, --directory  specify the directory to start from. [nargs=0..1] [default: "/work/tests"]

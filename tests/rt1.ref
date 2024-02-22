@@ -1,0 +1,9 @@
+
+CFG:
+  /work/tests/.labels
+
+SUBLABELS: 0
+ 
+FILES: 2
+  /work/tests/Dir1/dir1-file1-label1.md
+  /work/tests/Dir2/dir2-file1.md

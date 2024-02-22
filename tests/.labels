@@ -1,0 +1,11 @@
+
+# Parameters
+
+ignored : .exe .html .sty .out .ref .log
+parsed : .md .txt
+print_max_files_per_directory : 3
+
+# Labels
+
+label1 label2 label3 => labels
+file1 == fichier1

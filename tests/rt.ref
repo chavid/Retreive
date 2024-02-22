@@ -1,0 +1,7 @@
+
+CFG:
+  /work/tests/.labels
+
+LABELS:
+  file2 txt label1 file1 py label2 label3 ovalfile dir1 tests
+  work md labels dir2 sub
