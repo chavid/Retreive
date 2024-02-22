@@ -16,7 +16,7 @@ APP_EXES = $(patsubst ../src/%.cpp, %.exe, $(APP_SRCS))
 CPPFLAGS = -I.
 LDFLAGS = -L.
 CXX = g++
-CXXFLAGS = -std=c++20 -O3 -Wall -Wextra -Wfloat-equal
+CXXFLAGS = -static -std=c++20 -O3 -Wall -Wextra -Wfloat-equal
 DEPFLAGS = -MT $@ -MMD -MP -MF $*.td
 
 
