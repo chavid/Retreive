@@ -8,17 +8,24 @@ This is a command-line utility which browse recursively any directory, so to ret
 
 If I ask for the files about `c++ unix`, the file called `compile-cpp-with-linux.md` will be found, or the file called `CompileWithLinux.md` if it has `%%cpp` within.
 
+
 ## Credits
 
 - The file `argparse.hpp` 3.0 has been downloaded from https://github.com/p-ranav/argparse
 
+
 ## Requirements
+
+### Operating system
+
+This is all done for Linux and a bash terminal.
 
 ### Compiling
 
-It should work with any compiler supporting C++20 and `gmake`.
+It should work with `gmake` and any compiler supporting C++20.
 
-# Development tips and tricks
+
+## Development tips and tricks
 
 ### Testing
 
@@ -29,8 +36,3 @@ This project is developed with the help of Docker and [this recipe](https://gith
 - `*.h` : module header file
 - `*.cc` : module body file
 - `*.cpp` : application file
-
-
-
-
-
