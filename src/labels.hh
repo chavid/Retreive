@@ -31,7 +31,7 @@ class Labels
 
     // getters
     bool empty() const ; // if no required or forbidden labels
-    void print_primary() const ;
+    void print_found() const ;
     void print_sub_labels( std::size_t nb_results ) const ;
 
   private:
@@ -40,8 +40,9 @@ class Labels
     std::set<std::string> required_ ;
     std::set<std::string> forbidden_ ;
 
-    std::set<std::string> words_to_labels( std::vector<std::string> const & words ) const ; 
-
+    std::set<std::string> words_to_labels( std::vector<std::string> const & words ) const ;
+    void print_by_10( std::string const & title, auto filter ) const ;
+ 
  } ;
 
 

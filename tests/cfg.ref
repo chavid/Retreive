@@ -5,6 +5,7 @@ CFG:
 print_max_files_per_directory : 3
 parsed : .md .txt
 ignored : .exe .html .log .out .ref .sty
+dummy == stupide
 file1 == fichier1
 label3 => labels
 label2 => labels

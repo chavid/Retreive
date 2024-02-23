@@ -2,6 +2,6 @@
 CFG:
   /work/tests/.labels
 
-LABELS: 15
-  file2 txt file1 label1 label3 py label2 ovalfile dir1 tests
-  work md labels dir2 sub
+LABELS: 12
+  dir1 dir2 file1 file2 labels md ovalfile py sub tests
+  txt work

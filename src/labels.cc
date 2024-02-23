@@ -109,18 +109,6 @@ std::set<std::string> Labels::words_to_labels( std::vector<std::string> const & 
   return primary_labels ;
  }
 
-void print_by_10( std::string const & title, auto const & collection, auto accessor )
- {
-  std::cout<<"\n"<<title<<": "<<collection.size()<<"\n " ;
-  int i = 0 ;
-  for ( const auto & item : collection )
-   {
-    std::cout<<" "<<accessor(item) ;
-    if (!(++i % 10)) std::cout<<"\n " ;
-   }
-  if (i % 10) std::cout<<"\n" ;
- }
-
 
 //=============================================================================
 // Labels setters
@@ -166,7 +154,11 @@ void Labels::forbidden( std::vector<std::string> const & words )
 void Labels::primary( std::vector<std::string> const & words )
  {
   for ( auto const & label : words_to_labels(words) )
-   { primary_[label].frequence++ ; }
+   {
+    primary_[label].frequence++ ;
+    for ( auto const & ancestor : primary_[label].ancestors )
+     { primary_[ancestor].frequence++ ; }
+   }
  }
 
 
@@ -227,15 +219,45 @@ bool Labels::check( std::vector<std::string> const & words, bool count )
 bool Labels::empty() const
  { return (required_.empty()&&forbidden_.empty()) ; }
 
-void Labels::print_primary() const
- { print_by_10("LABELS",primary_,[]( auto const & label ){ return label.first ; }) ; }
+void Labels::print_by_10( std::string const & title, auto filter ) const
+ {
+  // apply filter
+  std::set<std::string> all_labels ;
+  for ( const auto & [ name, data ] : primary_ )
+  if (filter(data))
+   { all_labels.insert(name) ; }
+
+  // favor ancestors (to reduce the number of results)
+  std::set<std::string> top_labels ;
+  for ( const auto & label : all_labels )
+   {
+    bool ancestor_found = false ;
+    for ( const auto & ancestor : primary_.at(label).ancestors )
+    if (all_labels.contains(ancestor))
+     { ancestor_found = true ; break ; }
+    if (!ancestor_found)
+     { top_labels.insert(label) ; }
+   }
+
+  // print
+  std::cout<<"\n"<<title<<": "<<top_labels.size()<<"\n " ;
+  int i = 0 ;
+  for ( const auto & label : top_labels )
+   {
+    std::cout<<" "<<label ;
+    if (!(++i % 10)) std::cout<<"\n " ;
+   }
+  if (i % 10) std::cout<<"\n" ;
+ }
+
+void Labels::print_found() const
+ {
+  print_by_10("LABELS",[]( PrimaryLabelData const & data )
+   { return (data.frequence>0) ; }) ;
+ }
 
 void Labels::print_sub_labels( std::size_t nb_results ) const
  {
-  std::set<std::string> sub_labels ;
-  for ( const auto & label : primary_ )
-  if ( (label.second.frequence>1) && (label.second.frequence<nb_results) )
-   { sub_labels.emplace(label.first) ; }
-  print_by_10("SUBLABELS",sub_labels,[]( auto const & label ){ return label ; }) ;
+  print_by_10("SUBLABELS",[nb_results]( PrimaryLabelData const & data )
+   { return ((data.frequence>1)&&(data.frequence<nb_results)) ; }) ;
  }
-

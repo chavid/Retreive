@@ -71,7 +71,7 @@ int main( int argc, char const* argv[] )
   if (labels.empty())
    {
     top_dir.scan_for_labels(ps,labels) ;
-    labels.print_primary() ;
+    labels.print_found() ;
    }
   else
    {
