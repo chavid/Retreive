@@ -1,0 +1,11 @@
+
+CFG:
+  /work/tests/.labels
+
+print_max_files_per_directory : 3
+parsed : .md .txt
+ignored : .exe .html .log .out .ref .sty
+file1 == fichier1
+label3 => labels
+label2 => labels
+label1 => labels

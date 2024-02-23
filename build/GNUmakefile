@@ -7,7 +7,7 @@ SHELL = /bin/bash
 
 MDL_HDRS = $(wildcard ../src/*.hh)
 MDL_SRCS = $(wildcard ../src/*.cc)
-MDL_OBJS = $(patsubst ../%.cc, %.o, $(MDL_SRCS))
+MDL_OBJS = $(patsubst ../src/%.cc, %.o, $(MDL_SRCS))
 MDL_DEPS = $(patsubst %.o, %.d, $(MDL_OBJS))
 
 APP_SRCS = $(wildcard ../src/*.cpp)

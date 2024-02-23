@@ -3,6 +3,8 @@
 
 targets = [
 
+    { "name" : "cfg" , "command" : "../build/cfg.exe" },
+
     { "name" : "rthelp" , "command" : "rt --help" },
 
     { "name" : "rt" , "command" : "rt" },
