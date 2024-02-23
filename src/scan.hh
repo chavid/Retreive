@@ -35,6 +35,7 @@ class DirectoryScan
     void recursive_print_files( Parameters const & ps ) const ;
     void scan_dir( Parameters const & ps, Labels & labels, auto scan_regular_file ) ;
     void count_files() ;
+    void sort() ;
 
  } ;
 

@@ -43,6 +43,15 @@ void DirectoryScan::count_files()
   size_ += std::size(local_selected_files_) ;
  }
 
+void DirectoryScan::sort()
+ {
+  std::sort(local_selected_files_.begin(),local_selected_files_.end()) ;
+  std::sort(subdirs_.begin(),subdirs_.end(),[]( auto const & subdir1, auto const & subdir2 )
+   { return (subdir1.path_.filename()<subdir2.path_.filename()) ; }) ;
+  for ( auto & subdir : subdirs_ )
+   { subdir.sort() ; }
+ }
+
 
 //=============================================================================
 // DirectoryScan
@@ -62,6 +71,7 @@ void DirectoryScan::scan_for_files( Parameters const & ps, Labels & labels )
      { res.local_selected_files_.emplace_back(file_path.string()) ; }
    });
   count_files() ;
+  sort() ;
  }
 
 void DirectoryScan::print_files( Parameters const & ps ) const
