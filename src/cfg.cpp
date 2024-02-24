@@ -26,6 +26,7 @@ int main()
   cfg.apply("=>",std::bind(test_apply,"=>",_1,_2)) ;
 
   // end
+  std::cout << std::endl ;
   exit(0) ;
  }
  

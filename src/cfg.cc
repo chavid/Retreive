@@ -34,6 +34,11 @@ Configuration::Configuration( std::string const & file_name, fs::path const & ad
      { cfg_paths.emplace_back(optional_path) ; }
    }
 
+  // prepare the data, so that the apply method can be used
+  // even of there were no files to parse
+  for ( auto op : ops )
+   { data_[op] ; }
+
   // parse the files
   if (!cfg_paths.empty())
    {

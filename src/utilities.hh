@@ -36,6 +36,7 @@
 #include <unordered_map>
 
 #include <algorithm>
+#include <ranges>
 
 #include <filesystem>
 #include <regex>
@@ -46,6 +47,8 @@
 //==============================================================================
 
 namespace fs = std::filesystem ;
+namespace rg = std::ranges ;
+namespace vw = std::views ;
 
 using StringVec = std::vector<std::string> ;
 using StringSet = std::set<std::string> ;
@@ -61,4 +64,5 @@ using Files = std::vector<fs::path> ;
 // Utility functions
 //==============================================================================
 
-void lower( std::string & ) ;
+std::string lower( std::string ) ;
+

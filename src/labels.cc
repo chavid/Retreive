@@ -25,89 +25,64 @@ void expand_ancestors( PrimaryLabels & labels )
    }
  }
 
-std::set<std::string> process_synonyms( PrimaryLabels const & cfg_labels, std::set<std::string> const & labels )
- {
-  std::set<std::string> res ;
-  for ( auto const & label : labels )
-   {
-    // it is already a main static label
-    if (cfg_labels.contains(label))
-     { res.emplace(label) ; }
-    // is it in the synonyms ?
-    else
-     {
-      bool found = false ;
-      for ( auto const & static_label : cfg_labels )
-      if ( static_label.second.synonyms.contains(label) )
-       { res.emplace(static_label.first) ; found = true ; break ; }
-      // dynamic label
-      if(!found)
-       { res.emplace(label) ; }
-     }
-   }
-  return res ;
- }
-
 std::set<std::string> Labels::words_to_labels( std::vector<std::string> const & words ) const
  {
-  // regular expressions
-  std::regex sep { "[^[:alnum:]]+" } ;
-  std::regex camel_start { "^([[:upper:]][[:lower:][:digit:]]+)([[:upper:]][[:lower:][:digit:]].*)$" } ;
-
-  // split on non-words characters plus
-  std::vector<std::string> tokens2 ;
-  for ( std::string token1 : words )
-   {
-    std::istringstream iss{ std::regex_replace(token1,sep," ") } ;
-    std::string token2 ;
-    while (iss>>token2)
-     { tokens2.emplace_back(token2) ; }
-   }
-
-  // CamelCase
-  std::vector<std::string> tokens3 ;
-  for ( std::string token2 : tokens2 )
-   {
-    std::smatch m ;
-    while ( std::regex_match(token2,m,camel_start) )
+  // transformation pipeline
+  auto labels = words
+   | vw::transform([]( std::string iword ) // split on non-words characters
      {
-      tokens3.emplace_back(m[1].str()) ;
-      token2 = m[2].str() ;
-     }
-    tokens3.emplace_back(token2) ;
-   }
+      std::regex sep { "[^[:alnum:]]+" } ;
+      std::vector<std::string> owords ;
+      std::istringstream iss{ std::regex_replace(iword,sep," ") } ;
+      std::string word ;
+      while (iss>>word)
+       { owords.emplace_back(word) ; }
+      return owords ;
+     })
+   | vw::join
+   | vw::transform([]( std::string iword ) // CamelCase split
+     {
+      std::regex camel_start { "^([[:upper:]][[:lower:][:digit:]]+)([[:upper:]][[:lower:][:digit:]].*)$" } ;
+      std::vector<std::string> owords ;
+      std::smatch m ;
+      while ( std::regex_match(iword,m,camel_start) )
+       {
+        owords.emplace_back(m[1].str()) ;
+        iword = m[2].str() ;
+       }
+      owords.emplace_back(iword) ;
+      return owords ;
+     })
+   | vw::join
+   | vw::filter([]( std::string const & word )     // remove single characters
+     {
+      return (std::size(word)>1) ;
+     })
+   | vw::transform([]( std::string const & word )  // lower case
+     {
+      return lower(word) ;
+     })
+   | vw::transform([&]( std::string const & label ) // synonyms
+     {
+      // it is a primary label ?
+      if (primary_.contains(label))
+       { return label ; }
+      else
+       {
+        // is it in the synonyms ?
+        for ( auto const & primary_label : primary_ )
+        if ( primary_label.second.synonyms.contains(label) )
+         { return primary_label.first ; }
+        // dynamic label
+        return label ;
+       }
+     }) ;
 
-  // lower and remove single characters
-  std::set<std::string> labels ;
-  for ( std::string token3 : tokens3 )
-   {
-    lower(token3) ;
-    if (std::size(token3)>1)
-     { labels.emplace(token3) ; }
-   }
-
-  // synonyms
-  std::set<std::string> primary_labels ;
+  // final step (waiting for availability of std::ranges::to)
+  std::set<std::string> res ;
   for ( auto const & label : labels )
-   {
-    // it is already a main static label
-    if (primary_.contains(label))
-     { primary_labels.emplace(label) ; }
-    // is it in the synonyms ?
-    else
-     {
-      bool found = false ;
-      for ( auto const & primary_label : primary_ )
-      if ( primary_label.second.synonyms.contains(label) )
-       { primary_labels.emplace(primary_label.first) ; found = true ; break ; }
-      // dynamic label
-      if(!found)
-       { primary_labels.emplace(label) ; }
-     }
-   }
-
-  // final step
-  return primary_labels ;
+   { res.insert(label) ; }
+  return res ;
  }
 
 
@@ -120,23 +95,18 @@ Labels::Labels( Configuration const & cfg )
   // "same"
   cfg.apply("==",[this]( auto name, auto values )
    {
-    auto label { name } ;
-    lower(label) ;
+    auto label { lower(name) } ;
     for ( auto value : values )
-     {
-      lower(value) ;
-      primary_[label].synonyms.insert(value) ;
-     }
+     { primary_[label].synonyms.insert(lower(value)) ; }
    }) ;
   
   // interpret config "imply"
   cfg.apply("=>",[this]( auto name, auto values )
    {
-    auto child { name } ;
-    lower(child) ;
-    for ( auto parent : values )
+    auto child { lower(name) } ;
+    for ( auto value : values )
      {
-      lower(parent) ;
+      auto parent { lower(value) } ;
       primary_[child].parents.insert(parent) ;
       primary_[parent].children.insert(child) ;
      }

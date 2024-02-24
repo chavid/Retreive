@@ -9,8 +9,7 @@
 std::vector<std::string> scan_file( Parameters const & ps, fs::path const & file_path )
  {
   // ignore extensions
-  std::string ext { file_path.extension().generic_string() } ;
-  lower(ext) ;
+  std::string ext { lower(file_path.extension().generic_string()) } ;
   if ((ext.empty())||ps.is_ignore(ext))
    { return {} ; }
 
