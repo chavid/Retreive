@@ -24,15 +24,12 @@ class Labels
     Labels( Configuration const & cfg ) ;
     void required( std::vector<std::string> const & words ) ;
     void forbidden( std::vector<std::string> const & words ) ;
-    void primary( std::vector<std::string> const & words ) ;
-
-    // in between...
     bool check( std::vector<std::string> const & labels, bool count = true ) ;
 
     // getters
     bool empty() const ; // if no required or forbidden labels
     void print_found() const ;
-    void print_sub_labels( std::size_t nb_results ) const ;
+    void print_suggested_labels( std::size_t nb_results ) const ;
 
   private:
 

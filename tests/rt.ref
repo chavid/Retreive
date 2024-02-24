@@ -1,7 +1,6 @@
 
-CFG:
-  /work/tests/.labels
+CFG: 1
+  /work/tests/.retreive
 
-LABELS: 12
-  dir1 dir2 file1 file2 labels md ovalfile py sub tests
-  txt work
+SUGGESTED LABELS: 9
+  dir1 dir2 file1 labels md sub tests txt work

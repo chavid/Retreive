@@ -8,19 +8,26 @@ This is a command-line utility which browse recursively any directory, so to ret
 
 If I ask for the files about `c++ unix`, the file called `compile-cpp-with-linux.md` will be found, or the file called `CompileWithLinux.md` if it has `%%cpp` within.
 
+
 ## Credits
 
 - The file `argparse.hpp` 3.0 has been downloaded from https://github.com/p-ranav/argparse
 - Developed with the help of Docker and [this recipe](https://github.com/chavid/DevScripts/blob/main/Cpp20/Dockerfile).
 - The tests are handled with [oval script](https://github.com/chavid/MyDevTools/blob/main/bin/oval.py) .
 
+
 ## Requirements
 
 This is all done for Linux and a bash terminal.
 It can be compiled with any compiler supporting C++20.
 
+
 ## Fast and dirty guide
 
 UNDER WORK...
 
-The [complete guide](src/USERGUIDE.md) is UNDER WORK also...
+The [complete guide](tests/USERGUIDE.md) is UNDER WORK also...
+
+### Tips & tricks
+
+- The tool is not able to recognize and parse the content of textual files. By default, it will only search for the labels in the file path. You can configure the extensions of the textual files to parse with the `parse` parameter in the `.retreive` file.

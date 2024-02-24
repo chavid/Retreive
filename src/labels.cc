@@ -77,12 +77,13 @@ std::set<std::string> Labels::words_to_labels( std::vector<std::string> const & 
     tokens3.emplace_back(token2) ;
    }
 
-  // lower
+  // lower and remove single characters
   std::set<std::string> labels ;
   for ( std::string token3 : tokens3 )
    {
     lower(token3) ;
-    labels.emplace(token3) ;
+    if (std::size(token3)>1)
+     { labels.emplace(token3) ; }
    }
 
   // synonyms
@@ -150,21 +151,6 @@ void Labels::required( std::vector<std::string> const & words )
 
 void Labels::forbidden( std::vector<std::string> const & words )
  { forbidden_.merge(words_to_labels(words)) ; }
-
-void Labels::primary( std::vector<std::string> const & words )
- {
-  for ( auto const & label : words_to_labels(words) )
-   {
-    primary_[label].frequence++ ;
-    for ( auto const & ancestor : primary_[label].ancestors )
-     { primary_[ancestor].frequence++ ; }
-   }
- }
-
-
-//=============================================================================
-// Labels check
-//=============================================================================
 
 bool Labels::check( std::vector<std::string> const & words, bool count )
  {
@@ -256,8 +242,8 @@ void Labels::print_found() const
    { return (data.frequence>0) ; }) ;
  }
 
-void Labels::print_sub_labels( std::size_t nb_results ) const
+void Labels::print_suggested_labels( std::size_t nb_results ) const
  {
-  print_by_10("SUBLABELS",[nb_results]( PrimaryLabelData const & data )
+  print_by_10("SUGGESTED LABELS",[nb_results]( PrimaryLabelData const & data )
    { return ((data.frequence>1)&&(data.frequence<nb_results)) ; }) ;
  }

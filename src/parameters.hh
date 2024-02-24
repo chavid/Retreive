@@ -11,17 +11,17 @@ class Parameters
     Parameters( Configuration & ) ;
 
     // Test extensions
-    bool is_ignored( std::string const & ext ) const { return ignored_.contains(ext) ; }
-    bool is_parsed( std::string const & ext ) const { return parsed_.contains(ext) ; }
+    bool is_ignore( std::string const & ext ) const { return ignore_.contains(ext) ; }
+    bool is_parse( std::string const & ext ) const { return parse_.contains(ext) ; }
 
     // Other values
-    std::size_t print_max_files_per_directory() const { return print_max_files_per_directory_ ; }
+    std::size_t max_entries_per_matching_directory() const { return max_entries_per_matching_directory_ ; }
 
   private:
 
-    StringSet ignored_ ;
-    StringSet parsed_ ;
+    StringSet ignore_ ;
+    StringSet parse_ ;
 
-    std::size_t print_max_files_per_directory_ = 5 ;
+    std::size_t max_entries_per_matching_directory_ = 5 ;
 
  } ;

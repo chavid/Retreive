@@ -1,11 +1,11 @@
 
-CFG:
-  /work/tests/.labels
+CFG: 1
+  /work/tests/.retreive
 
-SUBLABELS: 4
-  dir1 dir2 file1 label1
+SUGGESTED LABELS: 2
+  dir2 labels
 
 FILES: 3
-  /work/tests/Dir1/dir1-file1-label1.md
+  /work/tests/USERGUIDE.md
   /work/tests/Dir2/dir2-file1.md
   /work/tests/Dir2/Dir2SubDir1/Dir2SubDir1File2.md

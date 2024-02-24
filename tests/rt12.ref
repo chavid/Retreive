@@ -1,7 +1,7 @@
 
-CFG:
-  /work/tests/.labels
+CFG: 1
+  /work/tests/.retreive
 
-SUBLABELS: 0
+SUGGESTED LABELS: 0
  
 FILES: 0

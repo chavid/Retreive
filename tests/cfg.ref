@@ -1,10 +1,10 @@
 
-CFG:
-  /work/tests/.labels
+CFG: 1
+  /work/tests/.retreive
 
-print_max_files_per_directory : 3
-parsed : .md .txt
-ignored : .exe .html .log .out .ref .sty
+max_entries_per_matching_directory : 3
+parse : .md .txt
+ignore : .exe .html .log .out .ref .sty
 dummy == stupide
 file1 == fichier1
 label3 => labels

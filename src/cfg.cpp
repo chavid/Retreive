@@ -7,7 +7,7 @@
 
 int main()
  { 
-  Configuration cfg(".labels") ;
+  Configuration cfg(".retreive") ;
 
   // prepare test apply function
   auto test_apply = []( std::string const & op, auto name, auto values )

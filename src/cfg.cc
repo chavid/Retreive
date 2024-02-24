@@ -37,7 +37,7 @@ Configuration::Configuration( std::string const & file_name, fs::path const & ad
   // parse the files
   if (!cfg_paths.empty())
    {
-    std::cout<<"\nCFG:\n" ;
+    std::cout<<"\nCFG: "<<std::size(cfg_paths)<<"\n" ;
     for ( auto const & cfg_path : cfg_paths )
      { parse(cfg_path) ; }
    }

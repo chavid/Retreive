@@ -8,10 +8,10 @@ The directories are recursively scanned for files, except the ones whose name
 start with a dot, which are considered hidden.
 
 The labels are searched for in directories names, files names, and the files
-content if they are text files. In the latter case, the content is parsed for
+content if they are text files. In the latter case, the content is parse for
 words starting with %%.
 
-In the configuration file called `~/.labels`, the labels can be given synonyms,
+In the configuration file called `~/.retreive`, the labels can be given synonyms,
 and the user can specify that a label implies another. The tool also check for
 a similar file in the current directory, and in the target directory set
 with the `-d` option, if different from the current directory.
@@ -60,7 +60,7 @@ int main( int argc, char const* argv[] )
    }
 
   // Configuration
-  Configuration cfg(".labels",arg_path) ;
+  Configuration cfg(".retreive",arg_path) ;
   Parameters ps(cfg) ;
   Labels labels(cfg) ;
   labels.required(arg_labels_tokens) ;
@@ -68,17 +68,10 @@ int main( int argc, char const* argv[] )
 
   // Recursively scan the top directory
   DirectoryScan top_dir(arg_path) ;
-  if (labels.empty())
-   {
-    top_dir.scan_for_labels(ps,labels) ;
-    labels.print_found() ;
-   }
-  else
-   {
-    top_dir.scan_for_files(ps,labels) ;
-    labels.print_sub_labels(top_dir.size()) ;
-    top_dir.print_files(ps) ;
-   }
+  top_dir.scan(ps,labels) ;
+  labels.print_suggested_labels(top_dir.size()) ;
+  if (!labels.empty())
+   { top_dir.print_files(ps) ; }
 
   // That's all folks
   std::cout<<std::endl ;

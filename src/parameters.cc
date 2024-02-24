@@ -3,34 +3,34 @@
 
 Parameters::Parameters( Configuration & cfg )
  {
-  constexpr std::string_view str_ignored = "ignored" ;
-  constexpr std::string_view str_parsed = "parsed" ;
-  constexpr std::string_view str_max_files = "print_max_files_per_directory" ;
+  constexpr std::string_view str_ignore = "ignore" ;
+  constexpr std::string_view str_parse = "parse" ;
+  constexpr std::string_view str_max_files = "max_entries_per_matching_directory" ;
   cfg.apply(":",[&]( auto name, auto values )
    {
     auto param { name } ;
     lower(param) ;
-    if (name==str_ignored)
+    if (name==str_ignore)
      {
       for ( auto value : values )
        {
         lower(value) ;
-        ignored_.insert(value) ;
+        ignore_.insert(value) ;
        }
      }
-    else if (name==str_parsed)
+    else if (name==str_parse)
      {
       for ( auto value : values )
        {
         lower(value) ;
-        parsed_.insert(value) ;
+        parse_.insert(value) ;
        }
      }
     else if (name==str_max_files)
      {
       if (std::size(values)>1)
         { throw std::runtime_error(std::format("Too many right hand parameters for: {}.",str_max_files)) ; }
-      print_max_files_per_directory_ = std::stoi(*(values.begin())) ;
+      max_entries_per_matching_directory_ = std::stoi(*(values.begin())) ;
      }
     else
      { throw std::runtime_error(std::format("Unknown parameter: {}.",name)) ; }
