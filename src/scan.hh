@@ -33,7 +33,7 @@ class DirectoryScan
     std::size_t size_ = 0 ;
 
     void recursive_print_files( Parameters const & ps ) const ;
-    void recursive_scan_dir( Parameters const & ps, Labels & labels ) ;
+    void recursive_scan_dir( Parameters const & ps, Labels & labels, std::set<std::string> parent_path_labels = {} ) ;
     void count_files() ;
     void sort() ;
 

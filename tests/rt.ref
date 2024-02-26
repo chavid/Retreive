@@ -2,6 +2,6 @@
 CFG: 1
   /work/tests/.retreive
 
-SUGGESTED LABELS: 9
-  dir1 dir2 file1 labels md sub tests txt work
+SUGGESTED LABELS: 7
+  dir1 dir2 file1 labels md sub txt
 

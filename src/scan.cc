@@ -28,8 +28,8 @@ std::vector<std::string> scan_file( Parameters const & ps, fs::path const & file
      }
    }
    
-  // add the file path elements
-  words.insert(words.end(),file_path.begin(),file_path.end()) ;
+  // add the filename
+  words.emplace_back(file_path.filename()) ;
 
   return words ;
  }
@@ -58,7 +58,7 @@ void DirectoryScan::sort()
 // DirectoryScan
 //=============================================================================
 
-void DirectoryScan::recursive_scan_dir( Parameters const & ps, Labels & labels )
+void DirectoryScan::recursive_scan_dir( Parameters const & ps, Labels & labels, std::set<std::string> current_labels )
  {
   auto s = fs::status(path_) ;
   if (fs::is_symlink(s))
@@ -72,8 +72,9 @@ void DirectoryScan::recursive_scan_dir( Parameters const & ps, Labels & labels )
     if ((std::size(dirname)>1)&&(dirname[0]=='_')&&(dirname[1]=='_'))
      { return ; }
     // directory characteristics
-    std::vector<std::string> dir_path_tokens { path_.begin(), path_.end() } ;
-    selected_dir_ = labels.check(dir_path_tokens,false) ;
+    std::set<std::string> new_labels = labels.words_to_labels({path_.filename().string()}) ;
+    current_labels.insert(new_labels.begin(),new_labels.end()) ;
+    selected_dir_ = labels.check(current_labels) ;
     // scan the directory
     for ( auto it = fs::directory_iterator(path_) ; it != fs::directory_iterator() ; ++it )
      {
@@ -85,12 +86,17 @@ void DirectoryScan::recursive_scan_dir( Parameters const & ps, Labels & labels )
       if (fs::is_directory(subs))
        {
         subdirs_.emplace_back(subpath) ;
-        subdirs_.back().recursive_scan_dir(ps,labels) ;
+        subdirs_.back().recursive_scan_dir(ps,labels,current_labels) ;
        }
       else if (fs::is_regular_file(subs))
        {
-        if (labels.check(scan_file(ps,subpath)))
+        std::vector<std::string> new_words = scan_file(ps,subpath) ;
+        std::set<std::string> new_labels = labels.words_to_labels(new_words) ;
+        auto file_labels = current_labels ;
+        file_labels.insert(new_labels.begin(),new_labels.end()) ;
+        if (labels.check(file_labels))
          {
+          labels.count(file_labels) ;
           local_size_++ ;
           if (!labels.empty())
            { local_files_.emplace_back(subpath.string()) ; }
@@ -106,7 +112,10 @@ void DirectoryScan::recursive_scan_dir( Parameters const & ps, Labels & labels )
   
 void DirectoryScan::scan( Parameters const & ps, Labels & labels )
  {
-  recursive_scan_dir(ps,labels) ;
+  auto parent_path = path_.parent_path() ;
+  std::vector<std::string> parent_path_words(parent_path.begin(),parent_path.end()) ;
+  std::set<std::string> parent_path_labels = labels.words_to_labels(parent_path_words) ;
+  recursive_scan_dir(ps,labels,parent_path_labels) ;
   count_files() ;
   sort() ;
  }

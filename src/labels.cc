@@ -122,11 +122,8 @@ void Labels::required( std::vector<std::string> const & words )
 void Labels::forbidden( std::vector<std::string> const & words )
  { forbidden_.merge(words_to_labels(words)) ; }
 
-bool Labels::check( std::vector<std::string> const & words, bool count )
+bool Labels::check( std::set<std::string> const & labels ) const
  {
-  // process the words into labels
-  auto labels = words_to_labels(words) ;
-
   // a single forbidden label is enough to reject the file
   for ( auto const & flabel : forbidden_ )
   for ( auto const & label : labels )
@@ -154,17 +151,18 @@ bool Labels::check( std::vector<std::string> const & words, bool count )
      { return false ; }
    }
 
-  // count
-  if (count)
+  // end
+  return true ;
+ }
+
+void Labels::count( std::set<std::string> const & labels )
+ {
   for ( auto const & label : labels )
    {
     primary_[label].frequence++ ;
     for ( auto const & ancestor : primary_[label].ancestors )
      { primary_[ancestor].frequence++ ; }
    }
-
-  // end
-  return true ;
  }
 
 
@@ -204,12 +202,6 @@ void Labels::print_by_10( std::string const & title, auto filter ) const
     if (!(++i % 10)) std::cout<<"\n " ;
    }
   if (i % 10) std::cout<<"\n" ;
- }
-
-void Labels::print_found() const
- {
-  print_by_10("LABELS",[]( PrimaryLabelData const & data )
-   { return (data.frequence>0) ; }) ;
  }
 
 void Labels::print_suggested_labels( std::size_t nb_results ) const

@@ -20,15 +20,19 @@ class Labels
  {
   public:
 
+    // utilities
+    std::set<std::string> words_to_labels( std::vector<std::string> const & words ) const ;
+
     // setters
     Labels( Configuration const & cfg ) ;
     void required( std::vector<std::string> const & words ) ;
     void forbidden( std::vector<std::string> const & words ) ;
-    bool check( std::vector<std::string> const & labels, bool count = true ) ;
+    void count( std::set<std::string> const & labels ) ;
+
 
     // getters
     bool empty() const ; // if no required or forbidden labels
-    void print_found() const ;
+    bool check( std::set<std::string> const & labels ) const ;
     void print_suggested_labels( std::size_t nb_results ) const ;
 
   private:
@@ -37,7 +41,6 @@ class Labels
     std::set<std::string> required_ ;
     std::set<std::string> forbidden_ ;
 
-    std::set<std::string> words_to_labels( std::vector<std::string> const & words ) const ;
     void print_by_10( std::string const & title, auto filter ) const ;
  
  } ;
