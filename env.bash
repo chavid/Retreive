@@ -13,7 +13,7 @@ cd ${ORIGINAL_DIR}
 
 #export PATH=:${PATH}
 
-# rt alias
+# exportable aliases
 
 export RETREIVE_DIR
 rt () { ${RETREIVE_DIR}/build/retreive.exe $* ; }

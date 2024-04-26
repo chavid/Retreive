@@ -1,3 +1,5 @@
 
-Typage for des std::string, notamment les labels.
+## A faire
+
+Typage fort des std::string, notamment les labels.
 

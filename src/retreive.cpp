@@ -28,7 +28,7 @@ with the `-d` option, if different from the current directory.
 int main( int argc, char const* argv[] )
  {
   // Parse arguments
-  argparse::ArgumentParser program("label_tower", "1.3", argparse::default_arguments::all);
+  argparse::ArgumentParser program("rt", "1.3", argparse::default_arguments::all);
   program.add_description("Find files and directories with the required labels.");
   program.add_argument("-d", "--directory")
     .default_value(fs::current_path().string())

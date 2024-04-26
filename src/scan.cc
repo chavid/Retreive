@@ -137,7 +137,7 @@ void DirectoryScan::recursive_print_files( Parameters const & ps ) const
      }
     if (size_>ps.max_entries_per_matching_directory())
      {
-      std::cout<<"  "<<path_.string()<<"/...\n" ;
+      std::cout<<"  "<<path_.string()<<"/\n" ;
       return ;
      }
    }
