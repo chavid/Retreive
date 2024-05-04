@@ -24,8 +24,6 @@ It can be compiled with any compiler supporting C++20.
 
 ## Fast and dirty guide
 
-UNDER WORK...
-
 Use `rt --help`.
 
 The [complete guide](tests/USERGUIDE.md) is UNDER WORK also...
