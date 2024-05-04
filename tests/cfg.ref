@@ -4,7 +4,8 @@ CFG: 1
 
 max_entries_per_matching_directory : 3
 parse : .md .txt
-ignore : .exe .html .log .out .ref .sty
+ignore_ext : .exe .html .log .out .ref .sty
+ignore_dir : Archives Git Hidden
 dummy == stupide
 file1 == fichier1
 label3 => labels

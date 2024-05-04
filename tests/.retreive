@@ -1,7 +1,8 @@
 
 # Parameters
 
-ignore : .exe .html .sty .out .ref .log
+ignore_dir : Archives Hidden Git
+ignore_ext : .exe .html .sty .out .ref .log
 parse : .md .txt
 max_entries_per_matching_directory : 3
 

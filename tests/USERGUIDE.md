@@ -30,7 +30,8 @@ The kind of lines that are expected are:
 Actually, you can put several labels on the left side of the `==` or `=>` operator, and several values on the right side. The program will generate all the possible combinations.
 
 The expected general parameters (and their default values) are:
-- `ignore : <empty default value>` : the files with thoses extensions are ignore;
+- `ignore_dir : <empty default value>` : thoses directories are ignored;
+- `ignore_ext : <empty default value>` : the files with thoses extensions are ignored (put the `.`);
 - `parse : .txt .md` : the content of those files is parse;
 - `max_entries_per_matching_directory : 5` : when a directory match the labels (because of its path), the program prints its files and subdirectories only if there are no more than this maximum number of entries. 
 

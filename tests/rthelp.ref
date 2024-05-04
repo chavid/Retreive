@@ -1,4 +1,4 @@
-Usage: label_tower [--help] [--version] [--directory VAR] labels
+Usage: rt [--help] [--version] [--directory VAR] labels
 
 Find files and directories with the required labels.
 

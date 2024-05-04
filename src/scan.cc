@@ -10,7 +10,7 @@ std::vector<std::string> scan_file( Parameters const & ps, fs::path const & file
  {
   // ignore extensions
   std::string ext { lower(file_path.extension().generic_string()) } ;
-  if ((ext.empty())||ps.is_ignore(ext))
+  if ((ext.empty())||ps.is_ignore_ext(ext))
    { return {} ; }
 
   // intermediary list of tokens
@@ -65,11 +65,13 @@ void DirectoryScan::recursive_scan_dir( Parameters const & ps, Labels & labels, 
    { return ; }
   if (fs::is_directory(s))
    {
-    // ignore hidden directories
+    // ignore some directories
     std::string dirname { path_.filename().string() } ;
     if ((std::size(dirname)>1)&&(dirname[0]=='.')&&(dirname[1]!='.'))
      { return ; }
     if ((std::size(dirname)>1)&&(dirname[0]=='_')&&(dirname[1]=='_'))
+     { return ; }
+    if (ps.is_ignore_dir(dirname))
      { return ; }
     // directory characteristics
     std::set<std::string> new_labels = labels.words_to_labels({path_.filename().string()}) ;
