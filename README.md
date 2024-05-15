@@ -31,3 +31,4 @@ The [complete guide](tests/USERGUIDE.md) is UNDER WORK also...
 ## Tips & tricks
 
 - The tool cannot recognize whether a file is textual or not. By default, it will only search for the labels in the files paths. You can help the tool to recognize the textual files by listing the pertinent name extensions in the `parse` parameter of the `.retreive` file.
+- The tool ignore the files whose name has no extension. 
